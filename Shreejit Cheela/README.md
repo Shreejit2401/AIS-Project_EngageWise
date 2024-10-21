@@ -15,6 +15,6 @@
 ---
 
 
-🙏 Apologies for the Adding .\README.md late
+🙏 Apologies for the Adding ./README.md late
 
 I sincerely apologize for submitting the README file late.
