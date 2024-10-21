@@ -1,9 +1,11 @@
 ### 📚 Homework Assignments
 
 📝 Homework 1: Playground Notebook
+
 [![Playground Notebook](https://img.shields.io/badge/Playground%20Notebook-.ipynb-orange?logo=jupyter&style=for-the-badge)](./playground.ipynb)
 
-## 🤖 Homework 2: EngageWise
+🤖 Homework 2: EngageWise
+
 [![EngageWise Python Script](https://img.shields.io/badge/EngageWise-.py-blue?logo=python&style=for-the-badge)](./EngageWise.py)
 
 
