@@ -6,15 +6,25 @@
 
 🤖 Homework 2: EngageWise
 
-[![EngageWise Python Script](https://img.shields.io/badge/EngageWise-.py-blue?logo=python&style=for-the-badge)](./EngageWise.py)
+[![main Python Script](https://img.shields.io/badge/EngageWise-.py-blue?logo=python&style=for-the-badge)](./main.py)
 
+**Python Version used**: `3.7.16`
+
+---
+Usage
+---
+## 1. Requirements
+```py
+pip install -r requirements.txt
+```
+
+## 2. Main python script
+```py
+python main.py
+```
+
+Runs on `localhost:5005`
 
 ---
 ---
 ---
----
-
-
-🙏 Apologies for the Adding ./README.md late
-
-I sincerely apologize for submitting the README file late.
