@@ -6,7 +6,7 @@
 
 🤖 Homework 2: EngageWise
 
-[![main Python Script](https://img.shields.io/badge/EngageWise-.py-blue?logo=python&style=for-the-badge)](./main.py)
+[![main Python Script](https://img.shields.io/badge/main-.py-blue?logo=python&style=for-the-badge)](./main.py)
 
 **Python Version used**: `3.7.16`
 
