@@ -4,13 +4,21 @@ from cvzone.FaceMeshModule import FaceMeshDetector
 from cvzone.FaceDetectionModule import FaceDetector
 from imutils import face_utils
 import numpy as np
-import imutils
-import time
 import dlib
 from collections import OrderedDict
 import pygame
+import time
+import getpass
 
-number = 0
+AUTH_PASSWORD = "3ngag3Wi$e"
+
+def authenticate_user():
+    password = getpass.getpass("Enter password to start EngageWise: ")
+    if password != AUTH_PASSWORD:
+        print("Unauthorized access. Exiting program.")
+        exit()
+
+authenticate_user()
 
 def calculate_EAR(eye):
     A = distance.euclidean(eye[1], eye[5])
@@ -38,9 +46,6 @@ FACIAL_LANDMARKS_IDXS = OrderedDict([
 cam = cv2.VideoCapture(0)
 cam.set(3, 3000)
 cam.set(4, 1700)
-width = cam.get(3)
-height = cam.get(4)
-print(f"Current Camera Resolution: {width}x{height}")
 
 hog_face_detector = dlib.get_frontal_face_detector()
 dlib_facelandmark = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
@@ -49,7 +54,7 @@ dlib_facelandmark = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat"
 detector = FaceMeshDetector()
 detector2 = FaceDetector()
 blink_flag = False
-yawn_flag = False   
+yawn_flag = False
 EAR_THRESHOLD = 0.21
 MAR_THRESHOLD = 0.6
 ALARM_DURATION = 10
@@ -64,19 +69,16 @@ number = 0
 while True:
     try:
         ret, frame = cam.read()
-
         if not ret:
             print("Can't receive frame (stream end?). Exiting....")
             break
 
-        frame = cv2.flip(frame, 1)  
-
+        frame = cv2.flip(frame, 1)
         frame = cv2.GaussianBlur(frame, (7, 7), 0)
 
         frame, faces = detector.findFaceMesh(frame, draw=False)
         frame, bboxs = detector2.findFaces(frame, draw=False)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        face = None
 
         for bbox in bboxs:
             x, y, w, h = bbox["bbox"]
@@ -84,10 +86,7 @@ while True:
             w = distance.euclidean(l, r)
             W, f = 6.3, 825
             d = (W * f) / w * 2.54
-            try:
-                cv2.putText(frame, "Distance: {}cm".format(int(d)), (10, 90), cv2.FONT_HERSHEY_TRIPLEX, 0.7, (0, 0, 0), 2)
-            except Exception as error:
-                print(error)
+            cv2.putText(frame, "Distance: {}cm".format(int(d)), (10, 90), cv2.FONT_HERSHEY_TRIPLEX, 0.7, (0, 0, 0), 2)
 
         faces = hog_face_detector(gray)
         EAR = 0
@@ -95,7 +94,6 @@ while True:
         for face in faces:
             face_landmarks = dlib_facelandmark(gray, face)
             face_landmarks = face_utils.shape_to_np(face_landmarks)
-
             leftEye = face_landmarks[36:42]
             rightEye = face_landmarks[42:48]
             mouth = face_landmarks[mStart:mEnd]
@@ -103,7 +101,6 @@ while True:
             left_ear = calculate_EAR(leftEye)
             right_ear = calculate_EAR(rightEye)
             mar = cal_MAR(mouth)
-
             EAR = (left_ear + right_ear) / 2
 
             if EAR < EAR_THRESHOLD:
@@ -121,7 +118,7 @@ while True:
                     cv2.putText(frame, "Yawn Detected!", (1100, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
             else:
                 yawn_flag = False
-    
+
         cv2.putText(frame, "Blink count: {}".format(blink_count), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
         cv2.putText(frame, "Yawn count: {}".format(yawn_count), (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
 
@@ -132,7 +129,6 @@ while True:
             state = "Drowsy"
             
             if not alarm_active and time.time() - drowsy_start_time >= ALARM_DURATION:
-                # print("Alarm!!")
                 pygame.mixer.Sound.play(alarm)
                 alarm_active = True
         else:
