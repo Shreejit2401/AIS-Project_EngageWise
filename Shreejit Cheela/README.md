@@ -23,6 +23,10 @@ pip install -r requirements.txt
 python main.py
 ```
 
+## 3. Authorization Password
+```3ngag3Wi$e```
+
+---
 Runs on `localhost:5005`
 
 ---
