@@ -1,0 +1,13 @@
+streamlit
+build
+wheel
+cmake
+mediapipe
+opencv-python-headless
+imutils
+scipy
+numpy
+cvzone
+pygame
+fpdf
+dlib @ https://raw.githubusercontent.com/z-mahmud22/Dlib_Windows_Python3.x/main/dlib-19.22.99-cp39-cp39-win_amd64.whl
